@@ -3,6 +3,7 @@
  *
  * (C) Jens Axboe <jens.axboe@oracle.com> 2008
  */
+#include <asm/relaxed.h>
 #include <linux/rcupdate.h>
 #include <linux/rculist.h>
 #include <linux/kernel.h>
@@ -129,8 +130,9 @@ void __init call_function_init(void)
 static void csd_lock_wait(struct call_single_data *csd)
 {
 	set_csd_lock_waiting_flag();
-	while (csd->flags & CSD_FLAG_LOCK)
-		cpu_relax();
+	while (cpu_relaxed_read_short(&csd->flags) & CSD_FLAG_LOCK)
+		cpu_read_relax();
+
 	clear_csd_lock_waiting_flag();
 }
 
