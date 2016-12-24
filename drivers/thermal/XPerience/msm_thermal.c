@@ -43,18 +43,16 @@
 #include <soc/qcom/rpm-smd.h>
 #include <soc/qcom/scm.h>
 
-// define some configurations
-#define MAX_THRESHOLD 2
 #define MAX_RAILS 5
+#define MAX_THRESHOLD 2
 #define MONITOR_ALL_TSENS -1
 #define TSENS_NAME_MAX 20
-#define TSENS_NAME FORMAT "tsens_tz_sensor%d"
+#define TSENS_NAME_FORMAT "tsens_tz_sensor%d"
 #define THERM_SECURE_BITE_CMD 8
 
-// static
-static struct msm_thermal_data msm_thermal_info
+static struct msm_thermal_data msm_thermal_info;
 static struct delayed_work check_temp_work;
-static bool core_contro_enabled;
+static bool core_control_enabled;
 static uint32_t cpus_offlined;
 static DEFINE_MUTEX(core_control_mutex);
 static struct kobject *cc_kobj;
@@ -66,7 +64,7 @@ static struct completion freq_mitigation_complete;
 static struct completion thermal_monitor_complete;
 
 static int enabled;
-static int polling_enabled; //Salto
+static int polling_enabled;
 static int rails_cnt;
 static int psm_rails_cnt;
 static int limit_idx;
