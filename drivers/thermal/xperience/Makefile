@@ -1,1 +1,1 @@
-obj-$(CONFIG_ALESSA_THERMAL) += msm_thermal.o
+obj-$(CONFIG_ALESSA_THERMAL) += alessa_thermal.o

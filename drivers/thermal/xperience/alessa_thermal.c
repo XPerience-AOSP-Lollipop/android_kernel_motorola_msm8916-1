@@ -5512,7 +5512,6 @@ static int msm_thermal_dev_probe(struct platform_device *pdev)
 		create_cpu_topology_sysfs();
 		cluster_info_nodes_called = false;
 	}
-	msm_thermal_ioctl_init();
 	ret = msm_thermal_init(&data);
 	msm_thermal_probed = true;
 
@@ -5534,7 +5533,6 @@ static int msm_thermal_dev_exit(struct platform_device *inp_dev)
 {
 	int i = 0;
 
-	msm_thermal_ioctl_cleanup();
 	if (thresh) {
 		if (vdd_rstr_enabled)
 			kfree(thresh[MSM_VDD_RESTRICTION].thresh_list);
